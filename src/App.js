@@ -7,6 +7,7 @@ import Menu from './components/Menu'
 import CreateNew from './components/CreateNew'
 import AnecdoteList from './components/AnecdoteList'
 import Anecdote from './components/Anecdote'
+import Notification from './components/Notification'
 
 
 const App = () => {
@@ -49,17 +50,15 @@ const App = () => {
   }
 
   const match = useRouteMatch('/anecdotes/:id')
-  console.log("M: ", match)
   const anecdote = match
-  ? anecdotes.find(a => a.id === match.params.id)
-  : null
-  console.log("As: ", anecdotes)
-  console.log("A: ", anecdote)
+    ? anecdotes.find(a => a.id === match.params.id)
+    : null
 
   return (
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      {notification && <Notification text={notification} />}
       <Switch>
         <Route path='/anecdotes/:id'>
           <Anecdote anecdote={anecdote} />
@@ -68,7 +67,7 @@ const App = () => {
           <About />
         </Route>
         <Route path='/create'>
-          <CreateNew addNew={addNew} />
+          <CreateNew addNew={addNew} setNotification={setNotification} />
         </Route>
         <Route path='/'>
           <AnecdoteList anecdotes={anecdotes} />
